@@ -1,0 +1,307 @@
+getgenv().Gav = {
+    Skins = { -- Type a random letter/number if you dont want a skin on that certian gun 
+    ["Enabled"] = (false),
+    ["DoubleBarrel"] = (""),
+    ["Revolver"] = (""),
+    ["Shotgun"] = (""),
+    ["TacticalShotgun"] = (""),
+    ["Smg"] = (""),
+    ["Rifle"] = (""),
+    ["Silencer"] = (""),
+    ["SilencerAR"] = (""),
+    ["Glock"] = (""),
+    ["AK47"] = (""),
+    ["AR"] = (""),
+    ["LMG"] = (""),
+    ["RPG"] = (""),
+    ["P90"] = (""),
+    ["DrumGun"] = (""),
+    ["Aug"] = ("")
+    -- For skin texture id's go here https://mega.nz/folder/9aUHVByL#mBGgJh-kh3WC_dXnsRuqAQ
+},
+
+Spoofing = {
+    ["Ping"] = (false),
+    ["PingMost"] = ("3"),
+    ["PingLeast"] = ("2")
+},
+
+Avatar = {
+    ["Headless"] = (true), -- Repeats On Death
+    ["Korblox"] = (true), -- Repeats On Death
+    ["Accessory"] = (false),
+    ["AccessoryID"] = ("3019210") -- Enter Accessory ID
+},
+
+Extra = {
+    ["LowGFX"] = (false),
+    ["MuteBoomBox"] = (true),
+},
+
+Lighting = {
+    ["Fog"] = (false),
+    ["FogEnd"] = (""), -- 500 is normal for DH
+    ["FogColor"] = Color3.fromRGB(0, 0, 0),
+    ["Brightness"] = (false),
+    ["BrightnessAmount"] = ("1"), -- 1 is normal for DH
+    ["GlobalShadows"] = (false)
+    
+}
+
+Macro = {
+    ["MacroEnabled"] = (false),
+    ["MacroDelay"] = ("1") -- 1 Is Best 
+    ["MacroMode"] = (""), -- Normal, FirstPerson (Right Click is WIP)
+    ["MacroKey"] = ("") -- Keybind to toggle it
+}
+}
+
+   if getgenv().Gav.Skins.Enabled then
+ 
+local Services = {
+Players = game:GetService("Players"),
+UserInputService = game:GetService("UserInputService"),
+RunService = game:GetService("RunService"),
+}
+
+local a = "[Revolver]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Revolver
+
+local a = "[Double-Barrel SG]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.DoubleBarrel
+
+local a = "[Shotgun]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Shotgun
+
+local a = "[TacticalShotgun]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.TacticalShotgun
+
+local a = "[SMG]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Smg
+
+local a = "[Rifle]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Rifle
+
+local a = "[Silencer]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Silencer
+
+local a = "[SilencerAR]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.SilencerAR
+
+local a = "[Glock]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Glock
+
+local a = "[AK47]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.AK47
+
+local a = "[AR]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.AR
+
+local a = "[LMG]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.LMG
+
+local a = "[RPG]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.RPG
+
+local a = "[P90]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.P90
+
+local a = "[DrumGun]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.DrumGun
+
+local a = "[Aug]"
+game.Players.LocalPlayer.Backpack[a].Default.TextureID = getgenv().Gav.Skins.Aug
+else
+getgenv().Gav.Skins.Enabled = false
+end
+
+
+if getgenv().Gav.Spoofing.Ping then
+        local Ping
+    game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            for i,v in pairs(game:GetService("CoreGui").RobloxGui.PerformanceStats:GetChildren()) do
+                if v.Name == "PS_Button" then
+                    if v.StatsMiniTextPanelClass.TitleLabel.Text == "Ping" then
+                        v.StatsMiniTextPanelClass.ValueLabel.Text = tostring(Ping) ..  " Ping"
+                    end
+                end
+            end
+        end)
+        pcall(function()
+            if game:GetService("CoreGui").RobloxGui.PerformanceStats["PS_Viewer"].Frame.TextLabel.Text == "Ping" then
+                for i,v in pairs(game:GetService("CoreGui").RobloxGui.PerformanceStats["PS_Viewer"].Frame:GetChildren()) do
+                   if v.Name == "PS_DecoratedValueLabel" and string.find(v.Label.Text, 'Current') then
+                     v.Label.Text = "Current: " .. Ping .. " ms"
+                   end
+                   if v.Name == "PS_DecoratedValueLabel" and string.find(v.Label.Text, 'Average') then
+                     v.Label.Text = "Average: " .. Ping .. " ms"
+                   end
+                end
+            end
+        end)
+        pcall(function()
+            game:GetService("CoreGui").DevConsoleMaster.DevConsoleWindow.DevConsoleUI.TopBar.LiveStatsModule["Ping"].Text = math.round(tonumber(Memory)) .. " MB"
+        end)
+    end)
+    task.spawn(function()
+        while task.wait(1) do
+            Ping = tostring(math.random(Gav.Spoofing.PingLeast, Gav.Spoofing.PingMost)) .. "." .. tostring(math.random(10, 99))
+        end
+    end)
+    else getgenv().Gav.Spoofing.Ping = false
+end
+    
+if getgenv().Gav.Avatar.Headless then
+while true do
+game.Players.LocalPlayer.Character.Head.Transparency = 1
+game.Players.LocalPlayer.Character.Head.Transparency = 1
+for i,v in pairs(game.Players.LocalPlayer.Character.Head:GetChildren()) do
+if (v:IsA("Decal")) then
+v.Transparency = 1
+wait(0.2)
+end
+end
+getgenv().Gav.Avatar.Headless = false
+end
+end
+
+if getgenv().Gav.Avatar.Korblox then
+while true do
+local ply = game.Players.LocalPlayer
+    local chr = ply.Character
+    chr.RightLowerLeg.MeshId = "902942093"
+    chr.RightLowerLeg.Transparency = "1"
+    chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
+    chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
+    chr.RightFoot.MeshId = "902942089"
+    chr.RightFoot.Transparency = "1"
+game.Players.LocalPlayer.Character.Humanoid.Jump = false
+wait(0.2)
+end
+else 
+getgenv().Gav.Avatar.Korblox = false
+end
+
+if getgenv().Gav.Avatar.Accessory then
+  function l(a, _)
+        local b = Instance.new("Weld")
+        b.Part0 = a.Parent
+        b.Part1 = _.Parent
+        b.C0 = a.CFrame
+        b.C1 = _.CFrame
+        b.Parent = a.Parent
+        return b
+    end
+    local function b(c, d, b, _, a, e)
+        local f = Instance.new("Weld")
+        f.Name = c
+        f.Part0 = b
+        f.Part1 = _
+        f.C0 = a
+        f.C1 = e
+        f.Parent = d
+        return f
+    end
+    local function a(_, b)
+        for _, _ in pairs(_:GetChildren()) do
+            if _:IsA("Attachment") and _.Name == b then
+                return _
+            elseif not _:IsA("Accoutrement") and not _:IsA("Tool") then
+                local _ = a(_, b)
+                if _ then
+                    return _
+                end
+            end
+        end
+    end
+    function k(_, e)
+        e.Parent = _
+        local d = e:FindFirstChild("Handle")
+        if d then
+            local c = d:FindFirstChildOfClass("Attachment")
+            if c then
+                local _ = a(_, c.Name)
+                if _ then
+                    l(_, c)
+                end
+            else
+                local c = _:FindFirstChild("Head")
+                if c then
+                    local _ = CFrame.new(0, 0.5, 0)
+                    local a = e.AttachmentPoint
+                    b("HeadWeld", c, c, d, _, a)
+                end
+            end
+        end
+    end
+    local _ = getgenv().Gav.Avatar.AccessoryID
+    local _ = game:GetObjects("rbxassetid://" .. tostring(_))[1]
+    k(game.Players.LocalPlayer.Character, _)
+    else 
+        getgenv().Gav.Avatar.Accessory = false
+end
+
+if getgenv().Gav.Lighting.Fog then
+game.Lighting.FogEnd = getgenv().Gav.Lighting.FogEnd
+game:GetService("Lighting").FogColor = Color3.fromRGB(getgenv().Gav.Lighting.FogColor)
+else 
+    getgenv().Gav.Lighting.Fog = false
+end
+
+if getgenv().Gav.Lighting.Brightness then
+game.Lighting.Brightness = getgenv().Gav.Lighting.BrightnessAmount
+else
+    getgenv().Gav.Lighting.Brightness = false
+end
+
+if getgenv().Gav.Lighting.GlobalShadows then
+game:GetService("Lighting").GlobalShadows = false
+else
+    getgenv().Gav.Lighting.GlobalShadows = false
+end
+
+if getgenv().Gav.Macro.MacroEnabled then
+
+local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+local SpeedGlitch = false
+Mouse.KeyDown:Connect(function(Key)
+    if Key == (getgenv().Gav.Macro.MacroKey) and getgenv().Gav.Macro.MacroMode == "Normal" then
+    SpeedGlitch = not SpeedGlitch
+    if SpeedGlitch == true then
+    repeat task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "I", false, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "O", false, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "I", false, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "O", false, game)
+    task.wait(macrospeed / 100)
+    until SpeedGlitch == false
+end
+end
+end)
+
+
+    Mouse.KeyDown:Connect(function(Key)
+    if Key == (getgenv().Gav.Macro.MacroKey) and getgenv().Gav.Macro.MacroMode == "FirstPerson" then
+    SpeedGlitch = not SpeedGlitch
+    if SpeedGlitch == true then
+    repeat task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendMouseWheelEvent("0", "0", true, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendMouseWheelEvent("0", "0", false, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendMouseWheelEvent("0", "0", true, game)
+    task.wait(macrospeed / 100)
+    game:GetService("VirtualInputManager"):SendMouseWheelEvent("0", "0", false, game)
+    task.wait(macrospeed / 100)
+    until SpeedGlitch == false
+end
+end
+end)
+else 
+    getgenv().Gav.Macro.MacroEnabled = false
+end
